@@ -15,6 +15,10 @@ const HeroSection = styled(motion.section)`
 	background: ${({ theme }) => theme.colors.background} url(${heroBg}) center
 		center / cover no-repeat;
 
+	@media (min-width: 1000px) {
+		padding-left: 200px;
+	}
+
 	&::before {
 		content: '';
 		position: absolute;

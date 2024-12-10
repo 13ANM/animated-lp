@@ -1,16 +1,35 @@
-import { FC } from 'react'
+import React from 'react'
 import { motion } from 'framer-motion'
 import styled from 'styled-components'
+import heroBg from '../assets/hero-bg.jpg'
 
-const HeroSection = styled.section`
+const HeroSection = styled(motion.section)`
 	width: 100%;
 	height: 100vh;
 	padding: 0 2rem;
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: flex-start;
-	background: ${({ theme }) => theme.colors.background};
+	background: ${({ theme }) => theme.colors.background} url(${heroBg}) center
+		center / cover no-repeat;
+
+	&::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: rgba(10, 24, 66, 0.75);
+		z-index: 1;
+	}
+`
+
+const ContentWrapper = styled.div`
+	position: relative;
+	z-index: 2;
 `
 
 const Heading = styled(motion.h1)`
@@ -26,10 +45,11 @@ const Subheading = styled(motion.h2)`
 	margin-bottom: 2rem;
 	color: ${({ theme }) => theme.colors.text};
 	max-width: 600px;
+	text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
 `
 
 const CTAButton = styled(motion.button)`
-	background: ${({ theme }) => theme.colors.primary};
+	background: ${({ theme }) => theme.colors.cta};
 	color: ${({ theme }) => theme.colors.buttonText};
 	border: none;
 	padding: 0.75rem 1.5rem;
@@ -40,7 +60,7 @@ const CTAButton = styled(motion.button)`
 	outline: none;
 
 	&:hover {
-		background: #1d4ed8;
+		background: ${({ theme }) => theme.colors.ctaHover};
 	}
 `
 
@@ -66,27 +86,24 @@ const itemVariants = {
 	},
 }
 
-const Hero: FC = () => (
-	<HeroSection
-		as={motion.section}
-		variants={containerVariants}
-		initial='hidden'
-		animate='visible'
-	>
-		<Heading variants={itemVariants}>Welcome to Our Product</Heading>
+const Hero: React.FC = () => (
+	<HeroSection variants={containerVariants} initial='hidden' animate='visible'>
+		<ContentWrapper>
+			<Heading variants={itemVariants}>Welcome to Our Product</Heading>
 
-		<Subheading variants={itemVariants}>
-			We help you solve problems efficiently and effectively, empowering your
-			team to achieve their best results
-		</Subheading>
+			<Subheading variants={itemVariants}>
+				We help you solve problems efficiently and effectively, empowering your
+				team to achieve their best results.
+			</Subheading>
 
-		<CTAButton
-			variants={itemVariants}
-			whileHover={{ scale: 1.05 }}
-			whileTap={{ scale: 0.95 }}
-		>
-			Get Started
-		</CTAButton>
+			<CTAButton
+				variants={itemVariants}
+				whileHover={{ scale: 1.05 }}
+				whileTap={{ scale: 0.95 }}
+			>
+				Get Started
+			</CTAButton>
+		</ContentWrapper>
 	</HeroSection>
 )
 
